@@ -100,6 +100,7 @@ $ bricklink-export -e 510899 -u myusername
     <CONDITION>X</CONDITION>
     <MINQTY>2</MINQTY>
     <REMARKS></REMARKS>
+    <NOTIFY>Y</NOTIFY>
   </ITEM>
   <ITEM>
     <ITEMTYPE>P</ITEMTYPE>
@@ -107,6 +108,7 @@ $ bricklink-export -e 510899 -u myusername
     <COLOR>88</COLOR>
     <CONDITION>X</CONDITION>
     <REMARKS></REMARKS>
+    <NOTIFY>N</NOTIFY>
   </ITEM>
 ...
   <ITEM>
@@ -115,6 +117,7 @@ $ bricklink-export -e 510899 -u myusername
     <CONDITION>X</CONDITION>
     <MAXPRICE>5.00</MAXPRICE>
     <REMARKS></REMARKS>
+    <NOTIFY>N</NOTIFY>
   </ITEM>
 </INVENTORY>
 ```
