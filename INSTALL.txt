@@ -1,0 +1,12 @@
+On most UNIX-like systems, you can install bricklink-export by running one of 
+the following install commands as root or by using sudo.
+
+  git clone git://github.com/fdev/bricklink-export.git
+  cd bricklink-export
+  python setup.py install
+
+or
+
+  pip install git+http://github.com/fdev/bricklink-export
+
+
