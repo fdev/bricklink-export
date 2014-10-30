@@ -79,6 +79,7 @@ optional arguments:
   -l, --list            list of wanted lists
   -c, --colors          list of colors
   -e ID, --export ID    wanted list to export
+  -w ID, --wanted ID    override wanted list id in export
 ```
 
 
@@ -101,6 +102,7 @@ $ bricklink-export -e 510899 -u myusername
     <MINQTY>2</MINQTY>
     <REMARKS></REMARKS>
     <NOTIFY>Y</NOTIFY>
+    <WANTEDLISTID>510899</WANTEDLISTID>
   </ITEM>
   <ITEM>
     <ITEMTYPE>P</ITEMTYPE>
@@ -109,6 +111,7 @@ $ bricklink-export -e 510899 -u myusername
     <CONDITION>X</CONDITION>
     <REMARKS></REMARKS>
     <NOTIFY>N</NOTIFY>
+    <WANTEDLISTID>510899</WANTEDLISTID>
   </ITEM>
 ...
   <ITEM>
@@ -118,6 +121,7 @@ $ bricklink-export -e 510899 -u myusername
     <MAXPRICE>5.00</MAXPRICE>
     <REMARKS></REMARKS>
     <NOTIFY>N</NOTIFY>
+    <WANTEDLISTID>510899</WANTEDLISTID>
   </ITEM>
 </INVENTORY>
 ```
