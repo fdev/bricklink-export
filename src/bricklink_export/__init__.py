@@ -49,6 +49,7 @@ def main():
 	parser.add_argument('-l', '--list', dest='list', action='store_true', default=False, help='list of wanted lists')
 	parser.add_argument('-c', '--colors', dest='colors', action='store_true', default=False, help='list of colors')
 	parser.add_argument('-e', '--export', dest='export', metavar='ID', type=int, help='wanted list to export')
+	parser.add_argument('-w', '--wanted', dest='wanted', metavar='ID', type=int, help='override wanted list id in export')
 	args = parser.parse_args()
 	
 	# Requests session
@@ -299,6 +300,7 @@ def main():
 				print('\t\t<MINQTY>%s</MINQTY>' % item['minquantity'])
 			print('\t\t<REMARKS>%s</REMARKS>' % item['remarks'])
 			print('\t\t<NOTIFY>%s</NOTIFY>' % item['notify'])
+			print('\t\t<WANTEDLISTID>%d</WANTEDLISTID>' % (args.wanted if args.wanted is not None else args.export))
 			print('\t</ITEM>')
 		print('</INVENTORY>')
 		
