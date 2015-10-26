@@ -238,7 +238,7 @@ def main():
 				for row1, row2, row3, row4 in zip(*([iter(map(pq, rows))] * 4)):
 					# Part number
 					link = row1('td:eq(2) a[href]').attr('href')
-					match = re.match('^catalogItem.asp\?[SPMBGCIOU]=([0-9a-zA-Z\-]+)', link)
+					match = re.search('(catalogItem\.asp|catalogitem\.page)\?[SPMBGCIOU]=([0-9a-zA-Z\-]+)', link)
 					if not match:
 						sys.exit('Unexpected wanted list item link format.')
 					item = match.group(1)
