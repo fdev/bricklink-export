@@ -4,12 +4,8 @@ BrickLink Wanted List Export
 The [BrickLink website](http://www.bricklink.com/), where you can buy and sell 
 LEGO parts, sets and minifigures, lacks the ability to export your wanted lists. 
 
-This application generates a 
-[BrickLink XML file](http://www.bricklink.com/help.asp?helpID=207) for any of 
-your wanted lists, to be used in other applications or the BrickLink wanted list
-upload page. Unlike some userscripts, the generated XML file will contain all
-items from all pages of every item type (sets, parts, instructions, etc) within
-your wanted list.
+This application generates a BrickStock `.bsx` file for any of your wanted lists,
+to be used in other applications or the BrickLink wanted list upload page.
 
 
 bricklink-export is written in [Python](http://www.python.org/).
@@ -79,7 +75,6 @@ optional arguments:
   -l, --list            list of wanted lists
   -c, --colors          list of colors
   -e ID, --export ID    wanted list to export
-  -w ID, --wanted ID    override wanted list id in export
 ```
 
 
@@ -94,35 +89,41 @@ ID      Items    Name
 502648  8        Minifigure wishlist
 510899  34       Nice to have
 $ bricklink-export -e 510899 -u myusername
-<INVENTORY>
-  <ITEM>
-    <ITEMTYPE>S</ITEMTYPE>
-    <ITEMID>4719-1</ITEMID>
-    <CONDITION>X</CONDITION>
-    <MINQTY>2</MINQTY>
-    <REMARKS></REMARKS>
-    <NOTIFY>Y</NOTIFY>
-    <WANTEDLISTID>510899</WANTEDLISTID>
-  </ITEM>
-  <ITEM>
-    <ITEMTYPE>P</ITEMTYPE>
-    <ITEMID>3626b</ITEMID>
-    <COLOR>88</COLOR>
-    <CONDITION>X</CONDITION>
-    <REMARKS></REMARKS>
-    <NOTIFY>N</NOTIFY>
-    <WANTEDLISTID>510899</WANTEDLISTID>
-  </ITEM>
-...
-  <ITEM>
-    <ITEMTYPE>I</ITEMTYPE>
-    <ITEMID>4719-1</ITEMID>
-    <CONDITION>X</CONDITION>
-    <MAXPRICE>5.00</MAXPRICE>
-    <REMARKS></REMARKS>
-    <NOTIFY>N</NOTIFY>
-    <WANTEDLISTID>510899</WANTEDLISTID>
-  </ITEM>
-</INVENTORY>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE BrickStockXML>
+<BrickStockXML>
+<Inventory>
+  <Item>
+    <ItemID>3010</ItemID>
+    <ItemTypeID>P</ItemTypeID>
+    <ColorID>34</ColorID>
+    <ItemName>Brick 1 x 4</ItemName>
+    <ColorName>Lime</ColorName>
+    <Qty>12</Qty>
+    <Price>0</Price>
+    <Condition>X</Condition>
+  </Item>
+  <Item>
+    <ItemID>3010</ItemID>
+    <ItemTypeID>P</ItemTypeID>
+    <ColorID>7</ColorID>
+    <ItemName>Brick 1 x 4</ItemName>
+    <ColorName>Blue</ColorName>
+    <Qty>5</Qty>
+    <Price>0</Price>
+    <Condition>X</Condition>
+  </Item>
+  <Item>
+    <ItemID>3010</ItemID>
+    <ItemTypeID>P</ItemTypeID>
+    <ColorID>5</ColorID>
+    <ItemName>Brick 1 x 4</ItemName>
+    <ColorName>Red</ColorName>
+    <Qty>3</Qty>
+    <Price>0</Price>
+    <Condition>X</Condition>
+  </Item>
+</Inventory>
+</BrickStockXML>
 ```
 

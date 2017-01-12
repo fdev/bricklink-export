@@ -10,7 +10,7 @@ except:
 
 setup(
 	name = "bricklink-export",
-	version = "1.1",
+	version = "1.2",
 	url = 'http://github.com/fdev/bricklink-export/',
 	license = 'GPL2',
 	description = description,

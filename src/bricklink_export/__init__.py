@@ -43,19 +43,18 @@ def main():
 	
 	# Command arguments
 	parser = argparse.ArgumentParser(description='Export a BrickLink wanted list.')
-	parser.add_argument('--version', action='version', version='bricklink-export 1.1')
+	parser.add_argument('--version', action='version', version='bricklink-export 1.2')
 	parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', default=False, help='be verbose')
 	parser.add_argument('-u', '--username', dest='username', help='username on BrickLink')
 	parser.add_argument('-p', '--password', dest='password', help='password on BrickLink (omit for prompt)')
 	parser.add_argument('-l', '--list', dest='list', action='store_true', default=False, help='list of wanted lists')
 	parser.add_argument('-c', '--colors', dest='colors', action='store_true', default=False, help='list of colors')
 	parser.add_argument('-e', '--export', dest='export', metavar='ID', type=int, help='wanted list to export')
-	parser.add_argument('-w', '--wanted', dest='wanted', metavar='ID', type=int, help='override wanted list id in export')
 	args = parser.parse_args()
 	
 	# Requests session
 	session = requests.Session()
-	session.headers.update({'User-Agent': 'bricklink-export 1.1 (http://github.com/fdev/bricklink-export)'})
+	session.headers.update({'User-Agent': 'bricklink-export 1.2 (http://github.com/fdev/bricklink-export)'})
 	
 	# List and export require authentication
 	if args.list or args.export is not None:
@@ -183,7 +182,6 @@ def main():
 	# Export
 	if args.export is not None:
 		items = []
-
 		for page in itertools.count(1):
 			verbose('Retrieving page %d...' % page)
 
@@ -210,41 +208,29 @@ def main():
 				# No items on this page
 				break
 
-			for row in data['wantedItems']:
-				items.append({
-					'type': row['itemType'],
-					'id': row['itemNo'],
-					'color': row['colorID'],
-					'name': encode(row['itemName']),
-					'condition': row['wantedNew'],
-					'minquantity': row['wantedQty'],
-					'maxprice': row['wantedPrice'],
-					'remarks': encode(row['wantedRemark'] or ''),
-					'notify': row['wantedNotify'],
-				})
+			items += data['wantedItems']
 
 			if len(items) == data.get('totalResults'):
 				break
 
-		# See https://www.bricklink.com/help.asp?helpID=207
-		print('<INVENTORY>')
-		for item in items:	
-			print('\t<ITEM>')
-			print('\t\t<ITEMTYPE>%s</ITEMTYPE>' % item['type'])
-			print('\t\t<ITEMID>%s</ITEMID>' % item['id'])
-			if item['color']:
-				print('\t\t<COLOR>%s</COLOR>' % item['color'])
-			print('\t\t<CONDITION>%s</CONDITION>' % item['condition'])
-			if item['maxprice'] > 0:
-				print('\t\t<MAXPRICE>%s</MAXPRICE>' % item['maxprice'])
-			if item['minquantity']:
-				print('\t\t<MINQTY>%s</MINQTY>' % item['minquantity'])
-			print('\t\t<REMARKS>%s</REMARKS>' % item['remarks'])
-			print('\t\t<NOTIFY>%s</NOTIFY>' % item['notify'])
-			print('\t\t<WANTEDLISTID>%d</WANTEDLISTID>' % (args.wanted if args.wanted is not None else args.export))
-			print('\t</ITEM>')
-		print('</INVENTORY>')
-		
+		print('<?xml version="1.0" encoding="UTF-8"?>')
+		print('<!DOCTYPE BrickStockXML>')
+		print('<BrickStockXML>')
+		print('<Inventory>')
+		for item in items:
+			print('\t<Item>')
+			print('\t\t<ItemID>%s</ItemID>' % item['itemNo'])
+			print('\t\t<ItemTypeID>%s</ItemTypeID>' % item['itemType'])
+			print('\t\t<ColorID>%d</ColorID>' % item['colorID'])
+			print('\t\t<ItemName>%s</ItemName>' % encode(item['itemName']))
+			print('\t\t<ColorName>%s</ColorName>' % item['colorName'])
+			print('\t\t<Qty>%d</Qty>' % item['wantedQty'])
+			print('\t\t<Price>%s</Price>' % (item['wantedPrice'] if item['wantedPrice'] > 0 else '0'))
+			print('\t\t<Condition>%s</Condition>' % item['wantedNew'])
+			print('\t</Item>')
+		print('</Inventory>')
+		print('</BrickStockXML>')
+
 		sys.exit()
 	
 	parser.print_help()
